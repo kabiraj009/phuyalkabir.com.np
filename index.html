@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kabiraj Phuyal — Geotechnical Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg:        #0c0b09;
+    --bg2:       #131210;
+    --bg3:       #1a1815;
+    --surface:   #1f1d19;
+    --border:    rgba(200,175,120,0.15);
+    --gold:      #c8a96e;
+    --gold-dim:  rgba(200,169,110,0.18);
+    --gold-glow: rgba(200,169,110,0.08);
+    --text:      #e8e0d0;
+    --muted:     #8a8070;
+    --faint:     #3a3628;
+    --serif:     'Cormorant Garamond', Georgia, serif;
+    --sans:      'DM Sans', system-ui, sans-serif;
+    --radius:    6px;
+    --tr:        0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── Noise overlay ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* ── Navigation ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 4rem;
+    backdrop-filter: blur(18px);
+    background: rgba(12,11,9,0.75);
+    border-bottom: 1px solid var(--border);
+    transition: var(--tr);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color var(--tr);
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── Hamburger ── */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { display: block; width: 22px; height: 1px; background: var(--gold); transition: var(--tr); }
+  .mobile-menu {
+    display: none;
+    position: fixed; top: 65px; left: 0; right: 0; z-index: 99;
+    background: rgba(12,11,9,0.97);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2rem 2rem;
+    flex-direction: column; gap: 1.2rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color var(--tr);
+  }
+  .mobile-menu a:hover { color: var(--gold); }
+
+  /* ── Scroll line ── */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    z-index: 200; width: 0%; transition: width 0.1s linear;
+  }
+
+  /* ── Sections ── */
+  section { position: relative; z-index: 1; }
+
+  /* ── Hero ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 4rem 5rem;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 50%, rgba(200,169,110,0.06) 0%, transparent 70%),
+      linear-gradient(180deg, #0c0b09 0%, #0f0d0b 100%);
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .hero-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 30px; height: 1px; background: var(--gold); }
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .hero-name em { font-style: italic; color: var(--gold); }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+  .hero-inst {
+    font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); opacity: 0.6; margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.8rem;
+    font-family: var(--sans); font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; border-radius: var(--radius);
+    cursor: pointer; transition: var(--tr);
+    border: 1px solid transparent;
+  }
+  .btn-primary {
+    background: var(--gold); color: #0c0b09;
+    border-color: var(--gold);
+  }
+  .btn-primary:hover { background: #d4b87e; border-color: #d4b87e; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: var(--gold);
+    border-color: rgba(200,169,110,0.4);
+  }
+  .btn-outline:hover { background: var(--gold-dim); border-color: var(--gold); }
+
+  .hero-visual {
+    display: flex; justify-content: center; align-items: center;
+    position: relative;
+  }
+  .hero-photo-wrap {
+    width: 320px; height: 400px;
+    position: relative;
+  }
+  .hero-photo-wrap::before {
+    content: '';
+    position: absolute; inset: -1px;
+    border: 1px solid var(--gold);
+    border-radius: 2px;
+    transform: translate(14px, 14px);
+    opacity: 0.4;
+  }
+  .hero-photo {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 2px;
+    display: block;
+    background: var(--surface);
+  }
+  .hero-photo-placeholder {
+    width: 100%; height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(135deg, var(--surface) 0%, var(--bg3) 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 1rem;
+    border: 1px solid var(--border);
+  }
+  .hero-photo-placeholder svg { opacity: 0.3; }
+  .hero-photo-placeholder p { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .hero-stats {
+    position: absolute; bottom: -1.5rem; left: -2rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .hero-stat {
+    background: rgba(26,24,21,0.92);
+    padding: 1rem 1.2rem;
+    backdrop-filter: blur(10px);
+  }
+  .hero-stat-num {
+    font-family: var(--serif);
+    font-size: 1.6rem; font-weight: 400;
+    color: var(--gold); line-height: 1;
+    margin-bottom: 0.2rem;
+  }
+  .hero-stat-label { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ── Strata divider ── */
+  .strata {
+    height: 3px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      var(--faint) 15%,
+      var(--gold) 40%,
+      var(--faint) 65%,
+      transparent 100%
+    );
+    margin: 0;
+  }
+
+  /* ── Shared section layout ── */
+  .section-inner { max-width: 1100px; margin: 0 auto; padding: 6rem 4rem; }
+  .section-label {
+    font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.6rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--gold); }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300; line-height: 1.1;
+    color: var(--text); margin-bottom: 3rem;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  /* ── About ── */
+  #about { background: var(--bg2); }
+  .about-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 5rem; align-items: start; }
+  .about-body p { color: var(--muted); margin-bottom: 1.2rem; font-size: 0.95rem; }
+  .about-body p:first-child { font-family: var(--serif); font-size: 1.25rem; font-weight: 300; color: var(--text); line-height: 1.6; }
+  .about-details { display: flex; flex-direction: column; gap: 1.2rem; }
+  .about-detail-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.2rem; background: var(--surface);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    transition: border-color var(--tr);
+  }
+  .about-detail-item:hover { border-color: rgba(200,169,110,0.35); }
+  .detail-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border); border-radius: 50%;
+    color: var(--gold); font-size: 0.85rem;
+  }
+  .detail-label { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.15rem; }
+  .detail-val { font-size: 0.9rem; color: var(--text); }
+
+  /* ── Research Interests ── */
+  #interests { background: var(--bg); }
+  .interests-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .interest-card {
+    background: var(--bg2);
+    padding: 2.2rem 1.8rem;
+    transition: background var(--tr);
+    cursor: default;
+  }
+  .interest-card:hover { background: var(--surface); }
+  .interest-num {
+    font-family: var(--serif); font-size: 2.8rem; font-weight: 300;
+    color: var(--faint); line-height: 1; margin-bottom: 1.2rem;
+    transition: color var(--tr);
+  }
+  .interest-card:hover .interest-num { color: rgba(200,169,110,0.3); }
+  .interest-name {
+    font-family: var(--serif); font-size: 1.1rem; font-weight: 400;
+    color: var(--text); margin-bottom: 0.6rem;
+  }
+  .interest-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── Skills ── */
+  #skills { background: var(--bg2); }
+  .skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .skills-col h3 {
+    font-family: var(--serif); font-size: 1.3rem; font-weight: 300;
+    color: var(--text); margin-bottom: 1.8rem;
+  }
+  .skill-item { margin-bottom: 1.6rem; }
+  .skill-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+  .skill-name { font-size: 0.82rem; color: var(--text); letter-spacing: 0.04em; }
+  .skill-pct { font-size: 0.75rem; color: var(--muted); font-family: var(--serif); }
+  .skill-bar { height: 2px; background: var(--faint); border-radius: 2px; overflow: hidden; }
+  .skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), rgba(200,169,110,0.5));
+    border-radius: 2px;
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+  }
+  .tool-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tool-tag {
+    font-size: 0.73rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid var(--border); border-radius: 2px;
+    color: var(--muted); transition: all var(--tr);
+  }
+  .tool-tag:hover { border-color: rgba(200,169,110,0.4); color: var(--gold); }
+
+  /* ── Education ── */
+  #education { background: var(--bg); }
+  .edu-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+  .edu-card {
+    padding: 2rem;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    background: var(--surface);
+    position: relative; overflow: hidden;
+    transition: all var(--tr);
+  }
+  .edu-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform var(--tr);
+  }
+  .edu-card:hover { border-color: rgba(200,169,110,0.3); background: var(--bg3); }
+  .edu-card:hover::after { transform: scaleX(1); }
+  .edu-badge {
+    font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); border: 1px solid rgba(200,169,110,0.3);
+    padding: 0.25rem 0.6rem; border-radius: 2px;
+    display: inline-block; margin-bottom: 1.2rem;
+  }
+  .edu-degree {
+    font-family: var(--serif); font-size: 1.1rem; font-weight: 400;
+    color: var(--text); margin-bottom: 0.4rem; line-height: 1.3;
+  }
+  .edu-inst { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .edu-detail { font-size: 0.78rem; color: var(--muted); opacity: 0.7; }
+
+  /* ── Experience / Timeline ── */
+  #experience { background: var(--bg2); }
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 0.6rem; bottom: 0;
+    width: 1px; background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 3rem;
+    opacity: 0; transform: translateX(-16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .timeline-item.visible { opacity: 1; transform: none; }
+  .timeline-dot {
+    position: absolute; left: -2rem;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--bg2); border: 1px solid var(--gold);
+    top: 0.5rem; transform: translateX(-4px);
+    transition: background var(--tr);
+  }
+  .timeline-item:hover .timeline-dot { background: var(--gold); }
+  .timeline-year {
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.4rem;
+  }
+  .timeline-title {
+    font-family: var(--serif); font-size: 1.05rem; font-weight: 400;
+    color: var(--text); margin-bottom: 0.3rem; line-height: 1.4;
+  }
+  .timeline-org { font-size: 0.82rem; color: var(--muted); }
+
+  /* ── Contact ── */
+  #contact { background: var(--bg); }
+  .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .contact-intro {
+    font-family: var(--serif); font-size: 1.2rem; font-weight: 300;
+    color: var(--text); line-height: 1.6; margin-bottom: 2.5rem;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    text-decoration: none; color: var(--muted);
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    background: var(--surface);
+    transition: all var(--tr);
+    font-size: 0.87rem;
+  }
+  .contact-link:hover { border-color: rgba(200,169,110,0.35); color: var(--text); background: var(--bg3); }
+  .contact-link-icon {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 0.85rem; flex-shrink: 0;
+  }
+  .contact-link-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.1rem; }
+  .contact-link-val { font-size: 0.87rem; color: var(--text); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-label {
+    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .form-input {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 0.8rem 1rem;
+    color: var(--text); font-family: var(--sans); font-size: 0.9rem;
+    transition: border-color var(--tr);
+    outline: none; width: 100%;
+  }
+  .form-input:focus { border-color: rgba(200,169,110,0.5); }
+  .form-input::placeholder { color: var(--muted); opacity: 0.5; }
+  textarea.form-input { resize: vertical; min-height: 130px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  /* ── Footer ── */
+  footer {
+    padding: 2.5rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg);
+    position: relative; z-index: 1;
+  }
+  .footer-copy { font-size: 0.75rem; color: var(--muted); opacity: 0.6; }
+  .social-links { display: flex; gap: 1.2rem; }
+  .social-link {
+    width: 34px; height: 34px;
+    border: 1px solid var(--border); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); text-decoration: none; font-size: 0.82rem;
+    transition: all var(--tr);
+  }
+  .social-link:hover { border-color: rgba(200,169,110,0.4); color: var(--gold); }
+
+  /* ── Fade-in ── */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    #hero { padding: 7rem 1.5rem 4rem; }
+    .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-visual { order: -1; }
+    .hero-photo-wrap { width: 240px; height: 300px; }
+    .hero-stats { position: static; margin-top: 1rem; }
+    .section-inner { padding: 4rem 1.5rem; }
+    .about-grid, .skills-layout, .contact-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .interests-grid { grid-template-columns: 1fr 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1.2rem; padding: 2rem 1.5rem; text-align: center; }
+  }
+  @media (max-width: 540px) {
+    .interests-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-photo-wrap { width: 200px; height: 250px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">Kabiraj Phuyal</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#interests">Research</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#interests" onclick="closeMobile()">Research</a>
+  <a href="#skills" onclick="closeMobile()">Skills</a>
+  <a href="#education" onclick="closeMobile()">Education</a>
+  <a href="#experience" onclick="closeMobile()">Experience</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-eyebrow">PhD Candidate · Oregon State University</p>
+      <h1 class="hero-name">Kabiraj<br><em>Phuyal</em></h1>
+      <p class="hero-title">Geotechnical Engineer &amp; Researcher</p>
+      <p class="hero-inst">Civil &amp; Construction Engineering · Corvallis, OR</p>
+      <div class="hero-actions">
+        <a href="https://oregonstate.box.com/s/89zbpgob0azmvj7b1m99fwd9t8ir3aid" target="_blank" class="btn btn-primary">Download CV ↗</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-photo-wrap">
+        <div class="hero-photo-placeholder">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="1">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          <p>Add your photo</p>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-num">PhD</div>
+            <div class="hero-stat-label">Candidate</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">OSU</div>
+            <div class="hero-stat-label">Oregon State</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">5+</div>
+            <div class="hero-stat-label">Workshops</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">GEO</div>
+            <div class="hero-stat-label">Speciality</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strata"></div>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="section-inner">
+    <p class="section-label">About Me</p>
+    <h2 class="section-title">Driven by the <em>Earth's</em> complexity</h2>
+    <div class="about-grid">
+      <div class="about-body fade-in">
+        <p>I am a PhD Candidate in the Department of Civil &amp; Construction Engineering at Oregon State University, under the supervision of Professor Dr. Ben Leshchinsky.</p>
+        <p>My work is driven by a fascination with how the earth moves and behaves under pressure — specifically focusing on the complex mechanics that govern soil stability and subsurface environments.</p>
+        <p>As a researcher, I operate at the intersection of high-precision laboratory testing and computational modeling. I specialize in translating raw field data into robust numerical simulations — whether running iterative solvers to predict fluid movement in soil or using MATLAB to analyze complex signals.</p>
+        <p>My goal is to turn experimental observations into clear, actionable insights that advance our understanding of geotechnical systems.</p>
+      </div>
+      <div class="about-details fade-in" style="transition-delay:0.15s">
+        <div class="about-detail-item">
+          <div class="detail-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="detail-label">Location</div>
+            <div class="detail-val">Corvallis, Oregon, USA</div>
+          </div>
+        </div>
+        <div class="about-detail-item">
+          <div class="detail-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.08 3.4 2 2 0 0 1 3.06 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16v.92z"/></svg>
+          </div>
+          <div>
+            <div class="detail-label">Phone</div>
+            <div class="detail-val">+977-9843378635</div>
+          </div>
+        </div>
+        <div class="about-detail-item">
+          <div class="detail-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="detail-label">Email</div>
+            <div class="detail-val">phuyalk@oregonstate.edu</div>
+          </div>
+        </div>
+        <div class="about-detail-item">
+          <div class="detail-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </div>
+          <div>
+            <div class="detail-label">Advisor</div>
+            <div class="detail-val">Prof. Dr. Ben Leshchinsky</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strata"></div>
+
+<!-- ── RESEARCH INTERESTS ── -->
+<section id="interests">
+  <div class="section-inner">
+    <p class="section-label">What I Do</p>
+    <h2 class="section-title">Areas of <em>Research</em></h2>
+    <div class="interests-grid fade-in">
+      <div class="interest-card">
+        <div class="interest-num">01</div>
+        <div class="interest-name">Geotechnical Engineering</div>
+        <div class="interest-desc">Investigating soil behavior under static and dynamic loads, with emphasis on subsurface stability and failure mechanisms.</div>
+      </div>
+      <div class="interest-card">
+        <div class="interest-num">02</div>
+        <div class="interest-name">Engineering Geology</div>
+        <div class="interest-desc">Applying geological principles to civil engineering problems, bridging the gap between earth science and structural analysis.</div>
+      </div>
+      <div class="interest-card">
+        <div class="interest-num">03</div>
+        <div class="interest-name">Geological Mapping</div>
+        <div class="interest-desc">Field-based characterization of geological formations and structural features to inform engineering design.</div>
+      </div>
+      <div class="interest-card">
+        <div class="interest-num">04</div>
+        <div class="interest-name">Geophysical Analysis</div>
+        <div class="interest-desc">Utilizing seismic and non-invasive subsurface methods to characterize soil and rock conditions in the field.</div>
+      </div>
+      <div class="interest-card">
+        <div class="interest-num">05</div>
+        <div class="interest-name">Foundation Engineering</div>
+        <div class="interest-desc">Design and analysis of foundation systems to safely transfer structural loads to the underlying soil or rock.</div>
+      </div>
+      <div class="interest-card">
+        <div class="interest-num">06</div>
+        <div class="interest-name">Slope Stability</div>
+        <div class="interest-desc">Numerical and experimental analysis of slopes under various loading conditions, including seismic and pore pressure effects.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strata"></div>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="section-inner">
+    <p class="section-label">My Specialty</p>
+    <h2 class="section-title">Skills &amp; <em>Tools</em></h2>
+    <div class="skills-layout">
+      <div class="skills-col fade-in">
+        <h3>Core Competencies</h3>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Arc GIS / Geological Mapping</span><span class="skill-pct">90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-pct="90"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Programming (MATLAB, Python)</span><span class="skill-pct">90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-pct="90"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Project Monitoring</span><span class="skill-pct">80%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-pct="80"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Communication &amp; Presentation</span><span class="skill-pct">75%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-pct="75"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Data Analysis</span><span class="skill-pct">70%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-pct="70"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Teamwork &amp; Collaboration</span><span class="skill-pct">80%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-pct="80"></div></div>
+        </div>
+      </div>
+      <div class="skills-col fade-in" style="transition-delay:0.15s">
+        <h3>Software &amp; Tools</h3>
+        <div class="tool-tags">
+          <span class="tool-tag">MATLAB</span>
+          <span class="tool-tag">Python</span>
+          <span class="tool-tag">ArcGIS</span>
+          <span class="tool-tag">PLAXIS</span>
+          <span class="tool-tag">Rocscience Suite</span>
+          <span class="tool-tag">AutoCAD</span>
+          <span class="tool-tag">MS Excel</span>
+          <span class="tool-tag">LaTeX</span>
+          <span class="tool-tag">Geostudio</span>
+          <span class="tool-tag">FLAC</span>
+          <span class="tool-tag">R Studio</span>
+          <span class="tool-tag">SigmaW</span>
+          <span class="tool-tag">Seepage Analysis</span>
+          <span class="tool-tag">FEM Modeling</span>
+          <span class="tool-tag">Triaxial Testing</span>
+          <span class="tool-tag">CPT Interpretation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strata"></div>
+
+<!-- ── EDUCATION ── -->
+<section id="education">
+  <div class="section-inner">
+    <p class="section-label">Academic Background</p>
+    <h2 class="section-title">Education</h2>
+    <div class="edu-grid">
+      <div class="edu-card fade-in">
+        <div class="edu-badge">Current · PhD</div>
+        <div class="edu-degree">Civil &amp; Construction Engineering</div>
+        <div class="edu-inst">Oregon State University</div>
+        <div class="edu-detail">Corvallis, Oregon, USA</div>
+      </div>
+      <div class="edu-card fade-in" style="transition-delay:0.1s">
+        <div class="edu-badge">M.Sc. Applied Geology</div>
+        <div class="edu-degree">Master of Geology</div>
+        <div class="edu-inst">Central Department of Geology, TU</div>
+        <div class="edu-detail">Kirtipur, Kathmandu, Nepal</div>
+      </div>
+      <div class="edu-card fade-in" style="transition-delay:0.2s">
+        <div class="edu-badge">B.Sc. Geology</div>
+        <div class="edu-degree">Bachelor of Geology</div>
+        <div class="edu-inst">Tri-Chandra Multiple Campus, TU</div>
+        <div class="edu-detail">Ghantaghar, Kathmandu, Nepal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strata"></div>
+
+<!-- ── EXPERIENCE ── -->
+<section id="experience">
+  <div class="section-inner">
+    <p class="section-label">Professional Development</p>
+    <h2 class="section-title">Workshops &amp; <em>Events</em></h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2025</div>
+        <div class="timeline-title">Field Nonlinear Cyclic Shear Measurement in Soil Workshop</div>
+        <div class="timeline-org">NHERI at UTexas · Portland State University · CBBG at Arizona State University · Portland, OR</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2025</div>
+        <div class="timeline-title">ASCE Geo-Institute Short Course: Dam Design &amp; Seismic Analysis</div>
+        <div class="timeline-org">American Society of Civil Engineers (ASCE) Oregon Section · Portland, OR</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2025</div>
+        <div class="timeline-title">Geotechnical Graduate Student Symposium</div>
+        <div class="timeline-org">Portland State University · Portland, OR</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2019</div>
+        <div class="timeline-title">Workshop: Deep-seated Rock Slides</div>
+        <div class="timeline-org">BOKU University of Vienna, Austria · Tribhuvan University, Central Department of Geology, Nepal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strata"></div>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-label">Get in Touch</p>
+    <h2 class="section-title">Let's <em>Connect</em></h2>
+    <div class="contact-layout">
+      <div class="fade-in">
+        <p class="contact-intro">Whether you're interested in my research, want to collaborate on a project, or just want to connect — I'd love to hear from you.</p>
+        <div class="contact-links">
+          <a href="mailto:phuyalk@oregonstate.edu" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="contact-link-label">Email</div>
+              <div class="contact-link-val">phuyalk@oregonstate.edu</div>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/kabiraj-phuyal-713633145" target="_blank" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </div>
+            <div>
+              <div class="contact-link-label">LinkedIn</div>
+              <div class="contact-link-val">kabiraj-phuyal-713633145</div>
+            </div>
+          </a>
+          <a href="https://www.instagram.com/phuyal_kabir" target="_blank" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </div>
+            <div>
+              <div class="contact-link-label">Instagram</div>
+              <div class="contact-link-val">@phuyal_kabir</div>
+            </div>
+          </a>
+          <a href="https://www.facebook.com/kabir.phuyal.3" target="_blank" class="contact-link">
+            <div class="contact-link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </div>
+            <div>
+              <div class="contact-link-label">Facebook</div>
+              <div class="contact-link-val">kabir.phuyal.3</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="contact-form fade-in" style="transition-delay:0.15s">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-input" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" placeholder="your@email.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subject</label>
+          <input type="text" class="form-input" placeholder="Research collaboration, etc.">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-input" placeholder="Tell me about your inquiry..."></textarea>
+        </div>
+        <button type="button" class="btn btn-primary" style="width:100%; justify-content:center;">Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p class="footer-copy">© 2025 Kabiraj Phuyal · Oregon State University</p>
+  <div class="social-links">
+    <a href="https://www.linkedin.com/in/kabiraj-phuyal-713633145" target="_blank" class="social-link" aria-label="LinkedIn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+    <a href="https://www.instagram.com/phuyal_kabir" target="_blank" class="social-link" aria-label="Instagram">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+    </a>
+    <a href="https://www.facebook.com/kabir.phuyal.3" target="_blank" class="social-link" aria-label="Facebook">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+    </a>
+  </div>
+</footer>
+
+<script>
+// Progress bar
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (window.scrollY / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+});
+
+// Hamburger
+const ham = document.getElementById('hamburger');
+const mob = document.getElementById('mobile-menu');
+ham.addEventListener('click', () => mob.classList.toggle('open'));
+function closeMobile() { mob.classList.remove('open'); }
+
+// Intersection observer for fade-ins & skill bars
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      // Animate skill bars inside newly visible containers
+      e.target.querySelectorAll('.skill-fill').forEach(bar => {
+        bar.style.width = bar.dataset.pct + '%';
+      });
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-in, .timeline-item').forEach(el => io.observe(el));
+
+// Also observe skills section directly for bars
+const skillsSection = document.querySelector('#skills');
+if (skillsSection) {
+  const skillIo = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      document.querySelectorAll('.skill-fill').forEach(bar => {
+        setTimeout(() => { bar.style.width = bar.dataset.pct + '%'; }, 200);
+      });
+      skillIo.unobserve(skillsSection);
+    }
+  }, { threshold: 0.2 });
+  skillIo.observe(skillsSection);
+}
+
+// Active nav link highlight
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 200) current = s.getAttribute('id');
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+  });
+}, { passive: true });
+</script>
+</body>
+</html>
